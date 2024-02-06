@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will you go out with me?</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        text-align: center;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 90%;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      #rabbit-image {
+        width: 200px;
+        height: auto;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 8px;
+        border: none;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      .no-button {
+        transform: translateY(0);
+      }
+
+      .no-button:hover {
+        transform: translateX(50px);
+      }
+
+      .no-button.clicked {
+        transform: translateY(100px);
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .pulse-animation {
+        animation: pulse 1s infinite;
+      }
+
+      .smiley {
+        font-size: 48px;
+      }
+
+      .happy {
+        color: green;
+      }
+
+      .sad {
+        color: red;
+      }
+    </style>
+    <script>
+      function sendMessage(answer) {
+        var phoneNumber = "your_phone_number";
+        var message = "Will you go out with me? Answer: " + answer;
+        var url = "sms:" + phoneNumber + "?body=" + encodeURIComponent(message);
+        window.location.href = url;
+
+        // Change the rabbit image to happy when user clicks "Yes"
+        if (answer === "Yes") {
+          document.getElementById("rabbit-image").src = "happy_rabbit.jpg";
+          document.getElementById("smiley").innerHTML =
+            '<span class="smiley happy">&#128522;</span>';
+        } else {
+          // If user clicks "No", disable the button, move it down, and add pulse animation to the rabbit
+          var noButton = document.getElementById("no-button");
+          noButton.disabled = true;
+          noButton.classList.add("clicked");
+          document.getElementById("smiley").innerHTML =
+            '<span class="smiley sad">&#128577;</span>';
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Will you go out with me?</h1>
+      <img id="rabbit-image" src="placeholder_rabbit.jpg" alt="" />
+      <div id="smiley"><span class="smiley">&#128577;</span></div>
+      <br />
+      <button onclick="sendMessage('Yes')">Yes</button>
+      <button
+        id="no-button"
+        class="no-button"
+        onmouseover="this.disabled=true"
+        onclick="sendMessage('No')"
+      >
+        No
+      </button>
+    </div>
+  </body>
+</html>
